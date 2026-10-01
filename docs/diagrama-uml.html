@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama de Classes UML — Decorator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ffffff; padding: 8px; }
+    svg { display: block; width: 100%; max-width: 1152px; height: auto; margin: auto; }
+    .box { fill: #ffffff; stroke: #2d3142; stroke-width: 1.4; }
+    .header { fill: #f1f3f5; }
+    .name { font-family: 'Segoe UI', sans-serif; font-size: 14px; font-weight: 600; fill: #2d3142; text-anchor: middle; }
+    .member { font-family: Consolas, monospace; font-size: 12px; fill: #2d3142; }
+    .small { font-family: Consolas, monospace; font-size: 11px; fill: #4f5d75; }
+    .edge, .divider { fill: none; stroke: #2d3142; stroke-width: 1.4; }
+    .abstract { font-style: italic; }
+  </style>
+</head>
+<body>
+<svg viewBox="0 0 1152 684" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="diagrama-uml-title diagrama-uml-desc">
+  <title id="diagrama-uml-title">Classes da cotação de frete com Decorator</title>
+  <desc id="diagrama-uml-desc">FretePadrao e FreteDecorator realizam Frete, três serviços herdam de FreteDecorator, que mantém um Frete agregado, e CotadorFrete depende da interface.</desc>
+  <defs>
+    <marker id="uml-triangle" markerWidth="14" markerHeight="12" refX="13" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="1 1, 13 6, 1 11" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+    </marker>
+    <marker id="uml-open" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <polyline points="2 1, 10 5, 2 9" fill="none" stroke="#2d3142" stroke-width="1.4"/>
+    </marker>
+  </defs>
+  <rect width="1152" height="684" fill="#ffffff"/>
+
+  <!-- Dependência do cliente à interface. -->
+  <path class="edge" d="M380 76 H456" stroke-dasharray="4,3" marker-end="url(#uml-open)"/>
+  <!-- Realizações da interface. -->
+  <path class="edge" d="M240 228 V188 Q240 180 248 180 H512 Q520 180 520 172 V140" stroke-dasharray="5,4" marker-end="url(#uml-triangle)"/>
+  <path class="edge" d="M580 228 V140" stroke-dasharray="5,4" marker-end="url(#uml-triangle)"/>
+  <!-- Agregação: um frete pode ser compartilhado por vários decoradores. -->
+  <path class="edge" d="M744 212 V196 Q744 188 752 188 H808 Q816 188 816 180 V108 Q816 100 808 100 H756"/>
+  <path d="M744 228 L738 220 L744 212 L750 220 Z" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+  <rect x="760" y="204" width="40" height="16" fill="#ffffff"/>
+  <text class="small" x="764" y="216">0..*</text>
+  <rect x="772" y="76" width="20" height="16" fill="#ffffff"/>
+  <text class="small" x="776" y="88">1</text>
+  <!-- Generalizações dos serviços concretos. -->
+  <path class="edge" d="M190 548 V508 Q190 500 198 500 H552 Q560 500 560 492 V452" marker-end="url(#uml-triangle)"/>
+  <path class="edge" d="M584 548 V452" marker-end="url(#uml-triangle)"/>
+  <path class="edge" d="M970 548 V508 Q970 500 962 500 H800 Q792 500 792 492 V452" marker-end="url(#uml-triangle)"/>
+
+  <g id="class-cotador">
+    <rect class="box" x="20" y="20" width="360" height="108" rx="6"/>
+    <path class="header" d="M26 20 H374 Q380 20 380 26 V60 H20 V26 Q20 20 26 20 Z"/>
+    <path class="divider" d="M20 60 H380"/>
+    <text class="name" x="200" y="46">CotadorFrete</text>
+    <text class="member" x="36" y="90">+ gerarCotacao(frete: Frete): String</text>
+  </g>
+  <g id="interface-frete">
+    <rect x="456" y="20" width="300" height="120" rx="6" fill="#fdf7f4" stroke="#d9532f" stroke-width="1.6"/>
+    <path d="M462 20 H750 Q756 20 756 26 V72 H456 V26 Q456 20 462 20 Z" fill="#faeae4"/>
+    <path d="M456 72 H756" fill="none" stroke="#d9532f" stroke-width="1.2"/>
+    <text class="small" x="606" y="40" text-anchor="middle">«interface»</text>
+    <text class="name" x="606" y="60">Frete</text>
+    <text class="member" x="472" y="98">+ getValor(): BigDecimal</text>
+    <text class="member" x="472" y="122">+ getDescricao(): String</text>
+  </g>
+  <g id="class-frete-padrao">
+    <rect class="box" x="20" y="228" width="332" height="112" rx="6"/>
+    <path class="header" d="M26 228 H346 Q352 228 352 234 V268 H20 V234 Q20 228 26 228 Z"/>
+    <path class="divider" d="M20 268 H352"/>
+    <text class="name" x="186" y="254">FretePadrao</text>
+    <text class="member" x="36" y="296">+ getValor(): BigDecimal</text>
+    <text class="member" x="36" y="320">+ getDescricao(): String</text>
+  </g>
+  <g id="class-frete-decorator">
+    <rect class="box" x="456" y="228" width="440" height="224" rx="6"/>
+    <path class="header" d="M462 228 H890 Q896 228 896 234 V268 H456 V234 Q456 228 462 228 Z"/>
+    <path class="divider" d="M456 268 H896 M456 312 H896"/>
+    <text class="name abstract" x="676" y="254">FreteDecorator</text>
+    <text class="member" x="472" y="296">- frete: Frete {readOnly}</text>
+    <text class="member" x="472" y="336"># FreteDecorator(frete: Frete)</text>
+    <text class="member" x="472" y="360">+ getValor(): BigDecimal</text>
+    <text class="member" x="472" y="384">+ getDescricao(): String</text>
+    <text class="member abstract" x="472" y="408"># getValorAdicional(): BigDecimal</text>
+    <text class="member abstract" x="472" y="432"># getServicoAdicional(): String</text>
+  </g>
+  <g id="class-seguro">
+    <rect class="box" x="20" y="548" width="340" height="120" rx="6"/>
+    <path class="header" d="M26 548 H354 Q360 548 360 554 V588 H20 V554 Q20 548 26 548 Z"/>
+    <path class="divider" d="M20 588 H360"/>
+    <text class="name" x="190" y="574">SeguroTransporte</text>
+    <text class="member" x="36" y="616"># getValorAdicional(): BigDecimal</text>
+    <text class="member" x="36" y="640"># getServicoAdicional(): String</text>
+  </g>
+  <g id="class-rastreamento">
+    <rect class="box" x="408" y="548" width="352" height="120" rx="6"/>
+    <path class="header" d="M414 548 H754 Q760 548 760 554 V588 H408 V554 Q408 548 414 548 Z"/>
+    <path class="divider" d="M408 588 H760"/>
+    <text class="name" x="584" y="574">RastreamentoDetalhado</text>
+    <text class="member" x="424" y="616"># getValorAdicional(): BigDecimal</text>
+    <text class="member" x="424" y="640"># getServicoAdicional(): String</text>
+  </g>
+  <g id="class-entrega">
+    <rect class="box" x="808" y="548" width="324" height="120" rx="6"/>
+    <path class="header" d="M814 548 H1126 Q1132 548 1132 554 V588 H808 V554 Q808 548 814 548 Z"/>
+    <path class="divider" d="M808 588 H1132"/>
+    <text class="name" x="970" y="574">EntregaExpressa</text>
+    <text class="member" x="824" y="616"># getValorAdicional(): BigDecimal</text>
+    <text class="member" x="824" y="640"># getServicoAdicional(): String</text>
+  </g>
+</svg>
+</body>
+</html>
